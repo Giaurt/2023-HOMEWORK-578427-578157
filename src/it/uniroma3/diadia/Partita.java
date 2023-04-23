@@ -15,7 +15,6 @@ import it.uniroma3.diadia.giocatore.Giocatore;
 
 public class Partita {
 
-	
 	private boolean finita;
 	private Stanza stanzaCorrente;
 	private Stanza stanzaVincente;
@@ -60,6 +59,10 @@ public class Partita {
 	
 	public Giocatore getGiocatore() {
 		return giocatore;
+	}
+	
+	public boolean giocatoreIsVivo() {
+		return this.getGiocatore().getCfu()>0;
 	}
 	
 	/**
