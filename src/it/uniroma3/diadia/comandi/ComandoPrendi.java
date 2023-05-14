@@ -18,7 +18,7 @@ public class ComandoPrendi implements Comando{
 	public void esegui(Partita partita) {
 		boolean noAttrezzi = false;
 		if(nomeAttrezzo==null) {
-			if(partita.getStanzaCorrente().numeroAttrezzi!=0) {
+			if(!partita.getStanzaCorrente().getAttrezzi().isEmpty()) {
 				inOut.mostraMessaggio("Quale attrezzo vuoi prendere?");
 				inOut.mostraMessaggio(partita.getStanzaCorrente().toStringAttrezzi());
 				noAttrezzi = true;

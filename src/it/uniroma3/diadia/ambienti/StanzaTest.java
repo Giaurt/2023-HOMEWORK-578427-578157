@@ -2,6 +2,7 @@ package it.uniroma3.diadia.ambienti;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import it.uniroma3.diadia.Partita;
@@ -9,27 +10,39 @@ import it.uniroma3.diadia.attrezzi.Attrezzo;
 
 public class StanzaTest {
 	
-	Partita p = new Partita();
-	Stanza s1 = new Stanza("Stanza1");
-	Stanza s2 = new Stanza("Stanza2");
-	Labirinto l = new Labirinto();
-	Attrezzo a = new Attrezzo("spada", 4);
+	Partita p;
+	Labirinto l;
+	Attrezzo a;
+	
+	@Before
+	public void setUp() {
+		l = new LabirintoBuilder()
+				.addStanzaIniziale("atrio")
+				.addAttrezzo("martello", 2)
+
+				.addStanzaVincente("biblioteca")
+				.addAdiacenza("atrio", "biblioteca", "nord")
+				.getLabirinto();
+		p = new Partita(l);
+		a = new Attrezzo("martello", 2);
+		
+		
+	}
 
 	@Test
 	public void testGetStanzaAdiacente() {
-		assertNull(s1.getStanzaAdiacente("sud"));
+		assertNull(l.getStanzaCorrente().getStanzaAdiacente("sud"));
 	}
 	
 	@Test
 	public void testImpostaStanzaAdiacente() {
-		s1.impostaStanzaAdiacente("sud", s2);
-		assertEquals(s2, s1.getStanzaAdiacente("sud"));
+		assertEquals(l.getStanzaCorrente().getStanzaAdiacente("nord"), l.getStanzaVincente());
 	}
 
 	@Test
 	public void testAddAttrezzo() {
-		s1.addAttrezzo(a);
-		assertEquals(a, s1.getAttrezzo("spada"));
+		assertEquals(a.getNome(), l.getStanzaCorrente().getAttrezzo("martello").getNome());
+		assertEquals(a.getPeso(), l.getStanzaCorrente().getAttrezzo("martello").getPeso());
 	}
 
 }
